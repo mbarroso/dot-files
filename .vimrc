@@ -23,7 +23,6 @@ set incsearch
 set ignorecase
 set smartcase
 
-set visualbell
 set noerrorbells
 set printoptions=paper:letter
 
@@ -177,10 +176,11 @@ set smartindent
 filetype plugin on
 nnoremap <silent> <buffer> <leader>i :JavaImport<cr>
 nnoremap <silent> <buffer> <leader>e :JavaCorrect<cr>
+nnoremap <silent> <buffer> <leader>w :w<CR>
 
 " Find file in current directory and edit it.
 function! Find(name)
-	let l:list=system("find . -name '".a:name."' | grep -v '\.class' | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("find . -name '".a:name."*' | grep -v '\.class' | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -211,7 +211,7 @@ command! -nargs=1 Find :call Find("<args>")
 
 " Find file in current directory and edit it.
 function! RFind(name)
-	let l:list=system("grep -lr '".a:name."' grails-app src scripts web-app | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("grep -slr '".a:name."' test grails-app src web-app *.yaml *.c *.h | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -241,3 +241,67 @@ function! RFind(name)
 endfunction
 command! -nargs=1 RFind :call RFind("<args>")
 
+" Alias for saving
+function! W(name)
+	execute ":w"
+endfunction
+command! -nargs=0 W :call W("<args>")
+
+" ident for groovy
+function! GIdent()
+	execute ':g/{\n/normal j>i{'
+endfunction
+command! -nargs=0 GIdent :call GIdent()
+
+cmap w!! %!sudo tee > /dev/null %
+
+
+" Execute actions on the current file based on the file name (F5)
+function! ExecuteFile()
+  let file = expand("%")
+
+  if stridx(file, "/tmp/sample.rb") != -1
+    " call PreviewResults("ruby -rubygems " . file)
+    call ExecuteTest()
+  elseif stridx(file, ".mo") != -1
+    call PreviewResults("mo " . file)
+  elseif stridx(file, ".io") != -1
+    call PreviewResults("osxvm " . file)
+  elseif stridx(file, ".ml") != -1
+    call PreviewResults("ocaml " . file)
+  elseif stridx(file, "_test.rb") != -1
+    call ExecuteTest()
+  elseif stridx(file, ".rb") != -1
+    execute "!ruby %"
+  elseif stridx(file, "Tests.groovy") != -1
+    execute "!grails test-app"
+  elseif stridx(file, "Story.groovy") != -1
+    execute "!grails test-app -functional"
+  elseif stridx(file, ".groovy") != -1
+    execute "!groovy %"
+  elseif stridx(file, ".lua") != -1
+    call PreviewResults("lua " . file)
+  elseif stridx(file, ".min") != -1
+    call PreviewResults("min " . file)
+  elseif stridx(file, ".haml") != -1
+    execute "!haml % " . substitute(file, "\.haml$", ".html", "")
+  elseif stridx(file, ".dot") != -1
+    let dotfile = substitute(file, "\.dot$", ".pdf", "")
+    execute "!dot -Tpdf % > " . dotfile . " && evince " . dotfile
+  elseif stridx(file, ".markdown") != -1
+    execute "!maruku %"
+  elseif stridx(file, ".md") != -1
+    execute "!maruku %"
+  elseif stridx(file, ".sass") != -1
+    execute "!sass % " . substitute(file, "\.sass$", ".css", "")
+  elseif stridx(file, ".html") != -1
+    execute "!open %"
+  elseif stridx(file, ".s") != -1
+    call PreviewResults("shiny " . file)
+  endif
+endfunction
+
+map <F5> :call ExecuteFile()<CR>
+imap <F5> <ESC>:w!<CR>:call ExecuteFile()<CR>
+nmap <F3> "zyiw:exe "RF ".@z.""<CR>
+vmap <F3> "zy:exe "RF ".@z.""<CR>
