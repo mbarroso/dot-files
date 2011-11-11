@@ -249,7 +249,9 @@ command! -nargs=0 W :call W("<args>")
 
 " ident for groovy
 function! GIdent()
-	execute ':g/{\n/normal j>i{'
+	execute ':g/.*/normal ggvG1000<'
+	execute ':g/{\n/normal j0>i{'
+	execute ':g/->\n/normal j0>i{'
 endfunction
 command! -nargs=0 GIdent :call GIdent()
 
