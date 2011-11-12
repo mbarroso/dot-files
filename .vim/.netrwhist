@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/dnoseda/dev/frontend-rules/conf'
+let g:netrw_dirhist_2='/home/dnoseda/dev/frontend-rules'
+let g:netrw_dirhist_3='/home/dnoseda/dev/frontend-rules/pools'
+let g:netrw_dirhist_4='/home/dnoseda/dev/shipping-api/webserver/test'
+let g:netrw_dirhist_5='/home/dnoseda/dev/shipping-api/webserver/test/unit'
+let g:netrw_dirhist_6='/home/dnoseda/dev/shipping-api/webserver/test/unit/mercadoenvios'
