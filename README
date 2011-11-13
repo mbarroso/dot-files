@@ -1,1 +1,7 @@
 Based on eclim and http://items.sjbach.com/319/configuring-vim-right and another for Find files and gRepFind files
+
+Added:
+- F3 in normal or visual mode take the word/selection and searchit by content files within the current directory matching the word/selection
+- Snipmate
+http://www.vim.org/scripts/script.php?script_id=2540
+- :GI or :GIdent to ident groovy
