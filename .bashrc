@@ -110,6 +110,7 @@ alias clean-orig='rm -rf `find . -regex .+\.orig`'
 alias clean-svn='rm -rf `find . -type d -name .svn`'
 alias v='gvim --remote-silent'
 alias jsonpretty='python -mjson.tool'
+alias rpl='sh ~/bin/rpl.sh'
 
 # ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
 # export ORACLE_HOME

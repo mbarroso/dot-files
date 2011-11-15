@@ -219,7 +219,7 @@ function! RFind(name)
 	endif
 	if l:num != 1
 		echo l:list
-		let l:input=input("Which ? (CR=nothing)\n")
+		let l:input=input("Which ? (CR=nothing) matches for '".a:name."'\n")
 		if strlen(l:input)==0
 			return
 		endif
@@ -251,7 +251,7 @@ command! -nargs=0 W :call W("<args>")
 function! GIdent()
 	execute ':g/.*/normal ggvG1000<'
 	execute ':g/{\n/normal j0>i{'
-	execute ':g/->\n/normal j0>i{'
+	execute ':g/->\n/normal j0>i{<<'
 endfunction
 command! -nargs=0 GIdent :call GIdent()
 
@@ -307,3 +307,4 @@ map <F5> :call ExecuteFile()<CR>
 imap <F5> <ESC>:w!<CR>:call ExecuteFile()<CR>
 nmap <F3> "zyiw:exe "RF ".@z.""<CR>
 vmap <F3> "zy:exe "RF ".@z.""<CR>
+nmap <Space> :
