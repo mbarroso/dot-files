@@ -211,7 +211,7 @@ command! -nargs=1 Find :call Find("<args>")
 
 " Find file in current directory and edit it.
 function! RFind(name)
-	let l:list=system("grep -slr '".a:name."' test grails-app src web-app *.yaml *.c *.h | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("grep -slr '".a:name."' $(find . -name *.java -print -o -name *.groovy -print -o -name *.js -print -o -name *.gsp -print -o -name *.css -print -o -name *.c -print -o -name *.h -print -o -name *.htm* -print) | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -297,7 +297,7 @@ function! ExecuteFile()
   elseif stridx(file, ".sass") != -1
     execute "!sass % " . substitute(file, "\.sass$", ".css", "")
   elseif stridx(file, ".html") != -1
-    execute "!open %"
+    execute "!google-chrome %"
   elseif stridx(file, ".s") != -1
     call PreviewResults("shiny " . file)
   endif
@@ -308,3 +308,14 @@ imap <F5> <ESC>:w!<CR>:call ExecuteFile()<CR>
 nmap <F3> "zyiw:exe "RF ".@z.""<CR>
 vmap <F3> "zy:exe "RF ".@z.""<CR>
 nmap <Space> :
+
+
+"folding settings
+set foldmethod=indent   "fold based on indent
+set foldnestmax=10      "deepest fold is 10 levels
+set nofoldenable        "dont fold by default
+set foldlevel=1         "this is just what i use
+
+"macro for bookmarkletizise a js
+let @b='ggOjavascript:(function(){G}Go})()ggvG1000<:%s/ /%20/g:%s/\n//g'
+
