@@ -119,6 +119,7 @@ alias rpl='sh ~/bin/rpl.sh'
 export GAE_HOME=~/soft/appengine/google_appengine/
 export PATH=~/soft/play-1.0.3.3/:$PATH:/home/dnoseda/dev/labs/other
 export JAVA_OPTS="$JAVA_OPTS -Dwt.headless=true "
+export REDIS_HOME=~/soft/redis
 
 # para historico
 export HISTCONTROL=erasedups
