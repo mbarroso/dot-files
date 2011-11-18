@@ -88,7 +88,7 @@ nmap <silent> <Leader>b :LustyBufferExplorer<CR>
 nmap <silent> <Leader>r :LustyFilesystemExplorerFromHere<CR>
 nmap <silent> <Leader>g :LustyBufferGrep<CR>
 nmap <silent> <Leader>j :LustyJuggler<CR>
-nmap <silent> <TAB> :LustyJugglePrevious<CR>
+" nmap <silent> <TAB> :LustyJugglePrevious<CR>
 
 "let g:LustyJugglerAltTabMode=1
 "noremap <silent> <A-s> :LustyJuggler<CR>
@@ -211,7 +211,7 @@ command! -nargs=1 Find :call Find("<args>")
 
 " Find file in current directory and edit it.
 function! RFind(name)
-	let l:list=system("grep -slr '".a:name."'  test grails-app src web-app *.yaml *.c *.h | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("grep -slr '".a:name."'  test grails-app scripts *.groovy src web-app *.yaml *.c *.h | grep -v '\.class' | grep -v '\.swp' | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -316,6 +316,9 @@ set foldnestmax=10      "deepest fold is 10 levels
 set nofoldenable        "dont fold by default
 set foldlevel=1         "this is just what i use
 
-"macro for bookmarkletizise a js
+" macro for bookmarkletizise a js
 let @b='ggOjavascript:(function(){G}Go})()ggvG1000<:%s/ /%20/g:%s/\n//g'
 
+" switch between tabs or windows in vs
+nmap <tab> <c-w>l
+nmap <s-tab> <c-w>h
