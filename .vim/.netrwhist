@@ -1,5 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/dnoseda/dev/shipping-api/sonar/meli'
 let g:netrw_dirhist_2='/home/dnoseda/dev/shipping-api/sonar/meli/bin'
 let g:netrw_dirhist_3='/home/dnoseda/dev/shipping-api/sonar'
+let g:netrw_dirhist_4='/home/dnoseda/.grails'
+let g:netrw_dirhist_5='/home/dnoseda/.grails/1.3.7'
+let g:netrw_dirhist_6='/home/dnoseda/.grails/1.3.7/projects'
