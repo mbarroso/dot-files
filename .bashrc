@@ -111,7 +111,7 @@ alias clean-svn='rm -rf `find . -type d -name .svn`'
 alias v='gvim --remote-silent'
 alias jsonpretty='python -mjson.tool'
 alias rpl='sh ~/bin/rpl.sh'
-alias rr='sudo cp ~/bkpapt/resolv.conf /etc/resolv.conf'
+alias rr='echo "restoring resolv.conf"; sudo cp ~/bkpapt/resolv.conf /etc/resolv.conf'
 
 # ORACLE_HOME=/usr/lib/oracle/xe/app/oracle/product/10.2.0/server
 # export ORACLE_HOME
@@ -119,6 +119,7 @@ alias rr='sudo cp ~/bkpapt/resolv.conf /etc/resolv.conf'
 # export PATH=$PATH:$ORACLE_HOME/bin
 export GAE_HOME=~/soft/appengine/google_appengine/
 export PATH=~/soft/play-1.0.3.3/:$PATH:/home/dnoseda/dev/labs/other
+export PATH=/home/dnoseda/soft/node-v0.6.1/out/Release/:$PATH
 export JAVA_OPTS="$JAVA_OPTS -Dwt.headless=true "
 export REDIS_HOME=~/soft/redis
 
