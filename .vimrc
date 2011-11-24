@@ -43,17 +43,17 @@ set hidden
 set tags=tags;~/
 
 " Who needs .gvimrc?
-if has('gui_running')
-  set encoding=utf-8
-  "set guifont=Monospace\ Bold\ 9
-  set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
-  " Turn off toolbar and menu
-  set guioptions-=T
-  set guioptions-=m
-  colorscheme inkpot
-else
-  colorscheme desert
-end
+"if has('gui_running')
+"  set encoding=utf-8
+"  "set guifont=Monospace\ Bold\ 9
+"  set guifont=Bitstream\ Vera\ Sans\ Mono\ 9
+"  " Turn off toolbar and menu
+"  set guioptions-=T
+"  set guioptions-=m
+"  colorscheme inkpot
+"else
+colorscheme desert
+"end
 
 " Change <Leader>
 let mapleader = ","
@@ -250,8 +250,9 @@ command! -nargs=0 W :call W("<args>")
 " ident for groovy
 function! GIdent()
 	execute ':g/.*/normal ggvG1000<'
-	execute ':g/{\n/normal j0>i{'
-	execute ':g/->\n/normal j0>i{<<'
+	execute ':g/{\b*\n/normal j0>i{'
+	execute ':g/->\b*\n/normal j0>i{<<'
+	execute ':g/\[\b*\n/normal j0>i['
 endfunction
 command! -nargs=0 GIdent :call GIdent()
 
@@ -305,7 +306,7 @@ endfunction
 
 map <F5> :call ExecuteFile()<CR>
 imap <F5> <ESC>:w!<CR>:call ExecuteFile()<CR>
-nmap <F3> "zyiw:exe "RF ".@z.""<CR>
+nmap <F3> *"zyiw:exe "RF ".@z.""<CR>
 vmap <F3> "zy:exe "RF ".@z.""<CR>
 nmap <Space> :
 
@@ -322,3 +323,8 @@ let @b='ggOjavascript:(function(){G}Go})()ggvG1000<:%s/ /%20/g:%s/\n//g'
 " switch between tabs or windows in vs
 nmap <tab> <c-w>l
 nmap <s-tab> <c-w>h
+
+" to select an entire function definition
+map t f{vaBV
+
+
