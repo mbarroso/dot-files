@@ -1,0 +1,7 @@
+snippet showe
+	if(!${1:domain}.save(flush:true)){
+		$1.errors.each {
+			println "Error ${2}: ${it}"
+		}
+	}
+
