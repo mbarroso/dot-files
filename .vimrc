@@ -9,6 +9,7 @@ set showmatch
 set matchtime=0
 set shortmess=atI
 set ruler
+set number
 set showcmd
 
 set sidescroll=1
@@ -298,7 +299,7 @@ function! ExecuteFile()
   elseif stridx(file, ".sass") != -1
     execute "!sass % " . substitute(file, "\.sass$", ".css", "")
   elseif stridx(file, ".html") != -1
-    execute "!google-chrome %"
+    execute "!google-chrome $PWD/%"
   elseif stridx(file, ".s") != -1
     call PreviewResults("shiny " . file)
   endif
@@ -327,4 +328,45 @@ nmap <s-tab> <c-w>h
 " to select an entire function definition
 map t f{vaBV
 
+" to extract method refactoring
+function! ExtractMethod() range
+  let name = inputdialog("Name of new method:")
+  '<
+  exe "normal! O\<BS>def " . name ."()\{\<Esc>"
+  '>
+  exe "normal! oreturn ;\<CR>}\<Esc>k"
+  s/return/\/\/ return/ge
+  normal! j%
+  normal! kf(
+  exe "normal! yyPi// = \<Esc>wdwA;\<Esc>"
+  normal! ==
+  normal! j0w
+endfunction
+vmap em :call ExtractMethod()<CR>
+
+" tabs like chrome
+nmap <c-t> :tabe<cr>
+nmap <c-PageUp> :tabp<cr>
+nmap <c-PageDown> :tabn<cr>
+
+" to copy paste println chains: for example: println \"callerId && siteId \"
+" to callerId: ${callerId} && siteId: ${callerId} "
+" note: it goes to a blank
+let @h='yf Pi=${kDf i}'
+
+" always source .vimrc when saving
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+endif
+
+" open ~/.vimrc with ,v
+nmap <leader>v :tabedit $MYVIMRC<CR>
+
+" open browser with Vex . and open files in other tab with t
+" source: http://vimcasts.org/episodes/the-file-explorer/#comment-45366660
+let g:netrw_browse_split=4 " Open file in previous buffer
+
+
+" colorscheme for linenumbers
+hi LineNr ctermfg=lightred ctermbg=darkgray
 
