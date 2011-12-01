@@ -109,8 +109,11 @@ nnoremap ' `
 nnoremap ` '
 
 " Buffer management
-nmap <C-h> :bp<CR>
-nmap <C-l> :bn<CR>
+nmap <C-h> :tabp<CR>
+nmap <C-l> :tabn<CR>
+nmap <C-k> :bp<CR>
+nmap <C-j> :bn<CR>
+map <s-t> :tabe %<cr>
 "nmap <TAB> :b#<CR>
 "nmap <C-q> :bd<CR>
 nmap <C-d> :bw<CR>
@@ -181,7 +184,7 @@ nnoremap <silent> <buffer> <leader>w :w<CR>
 
 " Find file in current directory and edit it.
 function! Find(name)
-	let l:list=system("find . -name '".a:name."*' | grep -v '\.class' | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("find . -name '".a:name."*' | grep -v '\.class' | sort | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -345,7 +348,7 @@ endfunction
 vmap em :call ExtractMethod()<CR>
 
 " tabs like chrome
-nmap <c-t> :tabe<cr>
+nmap <leader>t :tabe<cr>
 nmap <c-PageUp> :tabp<cr>
 nmap <c-PageDown> :tabn<cr>
 
@@ -368,5 +371,7 @@ let g:netrw_browse_split=4 " Open file in previous buffer
 
 
 " colorscheme for linenumbers
-hi LineNr ctermfg=lightred ctermbg=darkgray
+hi LineNr ctermfg=lightgrey ctermbg=darkgray
+
+
 
