@@ -184,7 +184,7 @@ nnoremap <silent> <buffer> <leader>w :w<CR>
 
 " Find file in current directory and edit it.
 function! Find(name)
-	let l:list=system("find . -name '".a:name."*' | grep -v '\.class' | sort | perl -ne 'print \"$.\\t$_\"'")
+	let l:list=system("find . -name '".a:name."*' | grep -v '\.class' | grep -v '/target/' | sort | perl -ne 'print \"$.\\t$_\"'")
 	let l:num=strlen(substitute(l:list, "[^\n]", "", "g"))
 	if l:num < 1
 		echo "'".a:name."' not found"
@@ -209,7 +209,7 @@ function! Find(name)
 		let l:line=l:list
 	endif
 	let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
-	execute ":e ".l:line
+	execute ":tabe ".l:line
 endfunction
 command! -nargs=1 Find :call Find("<args>")
 
@@ -241,7 +241,7 @@ function! RFind(name)
 	endif
 	let l:line=substitute(l:line, "^[^\t]*\t./", "", "")
 	let l:line=strpart(l:line,3,strlen(l:line))
-	execute ":e ".l:line
+	execute ":tabe ".l:line
 endfunction
 command! -nargs=1 RFind :call RFind("<args>")
 
@@ -253,10 +253,13 @@ command! -nargs=0 W :call W("<args>")
 
 " ident for groovy
 function! GIdent()
+	execute ':%s/{\s*\n/{\r/g'
+	execute ':%s/\[\s*\n/[\r/g'
+	execute ':%s/->\s*\n/->\r/g'
 	execute ':g/.*/normal ggvG1000<'
-	execute ':g/{\b*\n/normal j0>i{'
-	execute ':g/->\b*\n/normal j0>i{<<'
-	execute ':g/\[\b*\n/normal j0>i['
+	execute ':g/{\s*\n/normal j0>i{'
+	execute ':g/->\s*\n/normal j0>i{<<'
+	execute ':g/\[\s*\n/normal j0>i['
 endfunction
 command! -nargs=0 GIdent :call GIdent()
 
@@ -310,8 +313,16 @@ endfunction
 
 map <F5> :call ExecuteFile()<CR>
 imap <F5> <ESC>:w!<CR>:call ExecuteFile()<CR>
+
+" find files with the string in word or selected string
 nmap <F3> *"zyiw:exe "RF ".@z.""<CR>
 vmap <F3> "zy:exe "RF ".@z.""<CR>
+
+" find files with name matching the word
+nmap <F4> "zyiw:exe "F ".@z.""<CR>
+
+" sobre un log abre archivo en la linea indicada
+nmap <F2> "zyiwf:l"xyw:exe "F ".@z.""<CR>:exe "".@x.""<CR>
 nmap <Space> :
 
 

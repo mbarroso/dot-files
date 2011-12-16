@@ -1,5 +1,5 @@
 let g:netrw_dirhistmax  =10
 let g:netrw_dirhist_cnt =3
-let g:netrw_dirhist_1='/home/dnoseda/mydev/mocknodejs'
-let g:netrw_dirhist_2='/home/dnoseda/mydev/mocknodejs/web-app'
-let g:netrw_dirhist_3='/home/dnoseda/mydev/mocknodejs/web-app/images'
+let g:netrw_dirhist_1='webserver/grails-app/domain'
+let g:netrw_dirhist_2='webserver/grails-app/domain/mercadoenvios'
+let g:netrw_dirhist_3='/home/dnoseda/dev/shipping-api/webserver/grails-app/domain/mercadoenvios'
