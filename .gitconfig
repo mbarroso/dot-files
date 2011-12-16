@@ -29,4 +29,4 @@
    mt = mergetool
    a = add .
 [merge]
-    tool = meld
+    tool = kdiff3
